@@ -1,3 +1,11 @@
+# Como Testar:
+
+Necessário Python estar instalado...
+
+1. faça um git clone https://github.com/LuiVLoureiro/Code_Test_Centrao
+2. faça no seu terminal um pip install -r requirements.txt
+3. por fim, no seu terminal, faça python main.py
+
 # Criação do Banco de Dados por SQLITE3
 
 Simular banco de dados fictício criado para comportar 100 usuários diferentes.
