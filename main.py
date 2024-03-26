@@ -108,7 +108,7 @@ class Database:
         if linhas:
             df = pd.DataFrame(linhas, columns=colunas)
             # Exibir o DataFrame
-            display(df)
+            print(df)
         else:
             print("A tabela está vazia.")
 
