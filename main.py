@@ -96,18 +96,18 @@ class Database:
 
             cursor.execute(sql_insert, values)
 
+    def visualizar_database():
+        # Executar consulta para selecionar todos os registros da tabela Usuario
+        cursor.execute('SELECT * FROM Usuario')
 
-# Executar consulta para selecionar todos os registros da tabela Usuario
-cursor.execute('SELECT * FROM Usuario')
+        # Obter os nomes das colunas
+        colunas = [descricao[0] for descricao in cursor.description]
+        linhas = cursor.fetchall()
 
-# Obter os nomes das colunas
-colunas = [descricao[0] for descricao in cursor.description]
-linhas = cursor.fetchall()
-
-# Criar um DataFrame com os dados obtidos
-if linhas:
-    df = pd.DataFrame(linhas, columns=colunas)
-    # Exibir o DataFrame
-    display(df)
-else:
-    print("A tabela está vazia.")
+        # Criar um DataFrame com os dados obtidos
+        if linhas:
+            df = pd.DataFrame(linhas, columns=colunas)
+            # Exibir o DataFrame
+            display(df)
+        else:
+            print("A tabela está vazia.")
