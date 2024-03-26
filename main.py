@@ -111,3 +111,8 @@ class Database:
             display(df)
         else:
             print("A tabela está vazia.")
+
+#Se já tiver criado a Database, comentar linha abaixo!
+Database.criar()
+Database.criar_dados_falsos()
+Database.visualizar_database()
