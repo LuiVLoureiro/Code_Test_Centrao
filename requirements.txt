@@ -1,0 +1,7 @@
+Faker==24.4.0
+geopandas==0.13.2
+pandas==1.5.3
+pandas-datareader==0.10.0
+pandas-gbq==0.19.2
+pandas-stubs==1.5.3.230304
+sklearn-pandas==2.2.0
