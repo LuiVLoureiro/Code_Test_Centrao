@@ -7,16 +7,11 @@ class Database:
     def __init__(self):
         pass
 
-    def conectar():
-        # Conectar com a Database
+    def criar():
         global conn
         global cursor
         conn = sql.connect('centrao.db')
         cursor = conn.cursor()
-
-    def criar():
-        # Conectar com a Database
-        Database.conectar()
         
         cursor.execute(
             '''CREATE TABLE IF NOT EXISTS Usuario (
@@ -35,9 +30,6 @@ class Database:
         conn.commit()
 
     def criar_dados_falsos():
-        # Conectar com a Database
-        Database.conectar()
-
         fake = Faker('pt_BR')
         cargos = ['Estágio', 'Junior', 'Pleno', 'Senior']
         sexos = ['Homem', 'Mulher']
@@ -106,8 +98,6 @@ class Database:
             cursor.execute(sql_insert, values)
 
     def visualizar_database():
-        # Conectar com a Database
-        Database.conectar()
         # Executar consulta para selecionar todos os registros da tabela Usuario
         cursor.execute('SELECT * FROM Usuario')
 
@@ -123,7 +113,7 @@ class Database:
         else:
             print("A tabela está vazia.")
 
-#Se já tiver criado a Database, comentar linha abaixo!
-#Database.criar()
-#Database.criar_dados_falsos()
+
+Database.criar()
+Database.criar_dados_falsos()
 Database.visualizar_database()
