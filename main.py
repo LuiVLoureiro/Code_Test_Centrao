@@ -2,18 +2,26 @@ import sqlite3 as sql
 from faker import Faker
 import random
 import pandas as pd
+import os
 
 class Database:
     def __init__(self):
-        pass
+        self.db_name = 'centrao.db'
+        self.conn = sql.connect(self.db_name)
+        self.cursor = self.conn.cursor()
 
-    def criar():
-        global conn
-        global cursor
-        conn = sql.connect('centrao.db')
-        cursor = conn.cursor()
-        
-        cursor.execute(
+        if not self.verificar_se_db_existe():
+            self.criar()
+            self.criar_dados_falsos() 
+        self.visualizar_database()
+
+    def verificar_se_db_existe(self):
+        self.cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Usuario';")
+        return self.cursor.fetchone() is not None
+
+
+    def criar(self):
+        self.cursor.execute(
             '''CREATE TABLE IF NOT EXISTS Usuario (
             ID INTEGER AUTO_INCREMENT PRIMARY KEY,
             NOME VARCHAR(100), CPF TEXT NOT NULL, RG TEXT, GESTOR VARCHAR(200),
@@ -27,9 +35,9 @@ class Database:
             ESTRANGEIRO VARCHAR(3), SEXO VARCHAR(15), TEM_FILHOS VARCHAR(3), MOTIVO VARCHAR(150), DEMISSAO DATE, PIN TEXT
             )
             ''')
-        conn.commit()
+        self.conn.commit()
 
-    def criar_dados_falsos():
+    def criar_dados_falsos(self):
         fake = Faker('pt_BR')
         cargos = ['Estágio', 'Junior', 'Pleno', 'Senior']
         sexos = ['Homem', 'Mulher']
@@ -95,15 +103,17 @@ class Database:
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             '''
 
-            cursor.execute(sql_insert, values)
+            self.cursor.execute(sql_insert, values)
+            
+            self.conn.commit()
 
-    def visualizar_database():
+    def visualizar_database(self):
         # Executar consulta para selecionar todos os registros da tabela Usuario
-        cursor.execute('SELECT * FROM Usuario')
+        self.cursor.execute('SELECT * FROM Usuario')
 
         # Obter os nomes das colunas
-        colunas = [descricao[0] for descricao in cursor.description]
-        linhas = cursor.fetchall()
+        colunas = [descricao[0] for descricao in self.cursor.description]
+        linhas = self.cursor.fetchall()
 
         # Criar um DataFrame com os dados obtidos
         if linhas:
@@ -114,6 +124,4 @@ class Database:
             print("A tabela está vazia.")
 
 
-Database.criar()
-Database.criar_dados_falsos()
-Database.visualizar_database()
+db = Database()
